@@ -11,3 +11,6 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
+
+const questoesRouter = require('./routes/questoes');
+app.use('/api', questoesRouter);
