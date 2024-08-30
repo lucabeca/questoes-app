@@ -69,4 +69,77 @@ RNF03 - Compatibilidade:
 - O sistema deve ser compatível com os principais navegadores (Chrome, Firefox, Edge, Safari) e funcionar corretamente em diferentes resoluções de tela.
 
 ### Modelo Lógico do Banco de Dados
-![Lógico_2](https://github.com/user-attachments/assets/fd5341d8-b4f1-4c6f-a767-9f529d65e7af)
+![Lógico_3](https://github.com/user-attachments/assets/56625222-aa4e-4889-b6e1-407946b395bb)
+
+### Script de criação do Banco de Dados
+
+```
+-- Criação da tabela "niveis"
+CREATE TABLE niveis (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL
+);
+
+-- Criação da tabela "categorias"
+CREATE TABLE categorias (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL
+);
+
+-- Criação da tabela "dificuldade"
+CREATE TABLE dificuldade (
+    id SERIAL PRIMARY KEY,
+    nivel VARCHAR(255) NOT NULL
+);
+
+-- Criação da tabela "modalidades"
+CREATE TABLE modalidades (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    nivel_id INT REFERENCES niveis(id)
+);
+
+-- Criação da tabela "provas"
+CREATE TABLE provas (
+    id SERIAL PRIMARY KEY,
+    ano DATE NOT NULL,
+    modalidade_id INT REFERENCES modalidades(id),
+    pdf VARCHAR(255)
+);
+
+-- Criação da tabela "arquivo"
+CREATE TABLE arquivo (
+    id SERIAL PRIMARY KEY,
+    diretorio VARCHAR(255) NOT NULL
+);
+
+-- Criação da tabela "subcategorias"
+CREATE TABLE subcategorias (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    categoria_id INT REFERENCES categorias(id)
+);
+
+-- Criação da tabela "topicos"
+CREATE TABLE topicos (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    subcategoria_id INT REFERENCES subcategorias(id)
+);
+
+-- Criação da tabela "solucoes"
+CREATE TABLE solucoes (
+    id SERIAL PRIMARY KEY,
+    descricao VARCHAR(255) NOT NULL
+);
+
+-- Criação da tabela "questoes"
+CREATE TABLE questoes (
+    id SERIAL PRIMARY KEY,
+    prova_id INT REFERENCES provas(id),
+    titulo VARCHAR(255) NOT NULL,
+    enunciado VARCHAR(255) NOT NULL,
+    categoria_id INT REFERENCES categorias(id),
+    dificuldade_id INT REFERENCES dificuldade(id),
+    solucao_id INT REFERENCES solucoes(id)
+);```
