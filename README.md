@@ -37,11 +37,12 @@ As dependências do front-end React incluem:
 - react: Biblioteca principal para construir a interface de usuário.
 - react-router-dom: Biblioteca para o gerenciamento de rotas no React.
 
-## Instruções de Instalação e Uso
-
 ### Pré-requisitos
 
 Certifique-se de ter o seguinte instalado em sua máquina:
 
 - [Node.js](https://nodejs.org/) (v12 ou superior)
 - [PostgreSQL](https://www.postgresql.org/) (v12 ou superior)
+
+### Modelo Lógico do Banco de Dados
+![Lógico_1](https://github.com/user-attachments/assets/b6a966d1-ceaf-4b3c-a370-baab5fe44a21)
