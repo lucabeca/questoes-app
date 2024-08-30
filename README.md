@@ -48,23 +48,24 @@ Certifique-se de ter o seguinte instalado em sua máquina:
 ### Requisitos funcionais e não funcionais do sistema
 ## Requisitos funcionais
 
-# RF01 - Consulta de Questões:
+RF01 - Consulta de Questões:
 - O sistema deve permitir que os usuários consultem questões baseadas em critérios como dificuldade, tipo e ano.
 
-# RF02 - Visualização de Questões:
+RF02 - Visualização de Questões:
 - O sistema deve permitir que os usuários visualizem os detalhes de uma questão específica, incluindo a pergunta, dificuldade, tipo e ano.
 
-# RF03 - Filtro de Questões:
+RF03 - Filtro de Questões:
 - O sistema deve permitir que os usuários filtrem as questões por dificuldade, tipo, e ano.
 
 ## Requisitos não funcionais
-# RNF01 - Usabilidade:
+
+RNF01 - Usabilidade:
 - O sistema deve ser intuitivo e fácil de usar, com uma interface responsiva que funcione bem em dispositivos móveis e desktops.
 
-# RNF02 - Manutenibilidade:
+RNF02 - Manutenibilidade:
 - O código do sistema deve ser modular e bem documentado, facilitando a manutenção e a adição de novas funcionalidades.
 
-# RNF03 - Compatibilidade:
+RNF03 - Compatibilidade:
 - O sistema deve ser compatível com os principais navegadores (Chrome, Firefox, Edge, Safari) e funcionar corretamente em diferentes resoluções de tela.
 
 ### Modelo Lógico do Banco de Dados
