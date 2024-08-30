@@ -142,4 +142,5 @@ CREATE TABLE questoes (
     categoria_id INT REFERENCES categorias(id),
     dificuldade_id INT REFERENCES dificuldade(id),
     solucao_id INT REFERENCES solucoes(id)
-);```
+);
+```
