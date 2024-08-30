@@ -34,7 +34,8 @@ As principais dependências do servidor Node.js são:
 ### Front-End (React)
 As dependências do front-end React incluem:
 
-- react: Biblioteca principal para construir a interface de usuário.
+- react: Biblioteca principal 
+para construir a interface de usuário.
 - react-router-dom: Biblioteca para o gerenciamento de rotas no React.
 
 ### Pré-requisitos
@@ -44,5 +45,27 @@ Certifique-se de ter o seguinte instalado em sua máquina:
 - [Node.js](https://nodejs.org/) (v12 ou superior)
 - [PostgreSQL](https://www.postgresql.org/) (v12 ou superior)
 
+### Requisitos funcionais e não funcionais do sistema
+## Requisitos funcionais
+
+# RF01 - Consulta de Questões:
+- O sistema deve permitir que os usuários consultem questões baseadas em critérios como dificuldade, tipo e ano.
+
+# RF02 - Visualização de Questões:
+- O sistema deve permitir que os usuários visualizem os detalhes de uma questão específica, incluindo a pergunta, dificuldade, tipo e ano.
+
+# RF03 - Filtro de Questões:
+- O sistema deve permitir que os usuários filtrem as questões por dificuldade, tipo, e ano.
+
+## Requisitos não funcionais
+# RNF01 - Usabilidade:
+- O sistema deve ser intuitivo e fácil de usar, com uma interface responsiva que funcione bem em dispositivos móveis e desktops.
+
+# RNF02 - Manutenibilidade:
+- O código do sistema deve ser modular e bem documentado, facilitando a manutenção e a adição de novas funcionalidades.
+
+# RNF03 - Compatibilidade:
+- O sistema deve ser compatível com os principais navegadores (Chrome, Firefox, Edge, Safari) e funcionar corretamente em diferentes resoluções de tela.
+
 ### Modelo Lógico do Banco de Dados
-![Lógico_1](https://github.com/user-attachments/assets/b6a966d1-ceaf-4b3c-a370-baab5fe44a21)
+![Lógico_2](https://github.com/user-attachments/assets/fd5341d8-b4f1-4c6f-a767-9f529d65e7af)
