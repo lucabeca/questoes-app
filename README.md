@@ -69,78 +69,82 @@ RNF03 - Compatibilidade:
 - O sistema deve ser compatível com os principais navegadores (Chrome, Firefox, Edge, Safari) e funcionar corretamente em diferentes resoluções de tela.
 
 ### Modelo Lógico do Banco de Dados
-![Lógico_3](https://github.com/user-attachments/assets/56625222-aa4e-4889-b6e1-407946b395bb)
+![Lógico_5](https://github.com/user-attachments/assets/b6d1850e-ec40-46ee-80bc-f5793886f137)
 
-### Script de criação do Banco de Dados
+### Script de criação do Banco de Dados PostGree SQL
 
 ```
--- Criação da tabela "niveis"
-CREATE TABLE niveis (
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL
-);
-
--- Criação da tabela "categorias"
-CREATE TABLE categorias (
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL
-);
-
--- Criação da tabela "dificuldade"
-CREATE TABLE dificuldade (
-    id SERIAL PRIMARY KEY,
-    nivel VARCHAR(255) NOT NULL
-);
-
--- Criação da tabela "modalidades"
-CREATE TABLE modalidades (
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    nivel_id INT REFERENCES niveis(id)
-);
-
--- Criação da tabela "provas"
 CREATE TABLE provas (
     id SERIAL PRIMARY KEY,
-    ano DATE NOT NULL,
-    modalidade_id INT REFERENCES modalidades(id),
-    pdf VARCHAR(255)
+    ano DATE,
+    modalidade_id INT,
+    arquivo_id INT,
+    fase VARCHAR(255),
+    turno VARCHAR(255)
 );
 
--- Criação da tabela "arquivo"
+CREATE TABLE modalidade (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255),
+    nivel_id INT
+);
+
+CREATE TABLE nivel (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255)
+);
+
 CREATE TABLE arquivo (
     id SERIAL PRIMARY KEY,
-    diretorio VARCHAR(255) NOT NULL
+    diretorio VARCHAR(510)
 );
 
--- Criação da tabela "subcategorias"
-CREATE TABLE subcategorias (
+CREATE TABLE dificuldade (
     id SERIAL PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    categoria_id INT REFERENCES categorias(id)
+    nivel VARCHAR(255)
 );
 
--- Criação da tabela "topicos"
-CREATE TABLE topicos (
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    subcategoria_id INT REFERENCES subcategorias(id)
-);
-
--- Criação da tabela "solucoes"
-CREATE TABLE solucoes (
-    id SERIAL PRIMARY KEY,
-    descricao VARCHAR(255) NOT NULL
-);
-
--- Criação da tabela "questoes"
 CREATE TABLE questoes (
     id SERIAL PRIMARY KEY,
-    prova_id INT REFERENCES provas(id),
-    titulo VARCHAR(255) NOT NULL,
-    enunciado VARCHAR(255) NOT NULL,
-    categoria_id INT REFERENCES categorias(id),
-    dificuldade_id INT REFERENCES dificuldade(id),
-    solucao_id INT REFERENCES solucoes(id)
+    prova_id INT,
+    titulo VARCHAR(1000),
+    enunciado TEXT,
+    dificuldade_id INT,
+    FOREIGN KEY (prova_id) REFERENCES provas(id),
+    FOREIGN KEY (dificuldade_id) REFERENCES dificuldade(id)
+);
+
+CREATE TABLE categorias (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255)
+);
+
+CREATE TABLE questoes_categorias (
+    questao_id INT,
+    categoria_id INT,
+    PRIMARY KEY (questao_id, categoria_id),
+    FOREIGN KEY (questao_id) REFERENCES questoes(id),
+    FOREIGN KEY (categoria_id) REFERENCES categorias(id)
+);
+
+CREATE TABLE solucoes (
+    id SERIAL PRIMARY KEY,
+    descricao VARCHAR(255),
+    id_questao INT,
+    FOREIGN KEY (id_questao) REFERENCES questoes(id)
+);
+
+CREATE TABLE subcategorias (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255),
+    categoria_id INT,
+    FOREIGN KEY (categoria_id) REFERENCES categorias(id)
+);
+
+CREATE TABLE topicos (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255),
+    subcategoria_id INT,
+    FOREIGN KEY (subcategoria_id) REFERENCES subcategorias(id)
 );
 ```
