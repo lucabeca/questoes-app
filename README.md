@@ -68,57 +68,145 @@ RNF02 - Manutenibilidade:
 RNF03 - Compatibilidade:
 - O sistema deve ser compatível com os principais navegadores (Chrome, Firefox, Edge, Safari) e funcionar corretamente em diferentes resoluções de tela.
 
-### Modelo Lógico do Banco de Dados
+### Modelo Físico do Banco de Dados
 ![Lógico_5](https://github.com/user-attachments/assets/b6d1850e-ec40-46ee-80bc-f5793886f137)
+
+### Relações do Banco de Dados
+- 1. provas
+Representa as provas de cada edição da OBI.
+Relações:
+modalidade: Cada prova está associada a uma modalidade, como "iniciação" ou "programação", através de modalidade_id.
+arquivo: Relaciona-se com um arquivo específico, contendo o diretório físico, através de arquivo_id.
+
+- 2. modalidades
+Representa a modalidade de cada prova, como "iniciação" ou "programação".
+Relações:
+Cada modalidade está associada a um nível através de nivel_id.
+
+- 3. niveis
+Define os níveis de dificuldade ou participação, como "júnior", "sênior", etc.
+Relações:
+Referenciada pela tabela modalidade, indicando o nível de cada modalidade.
+
+- 4. arquivos
+Armazena o diretório físico.
+Relações:
+Referenciada pelas tabelas provas e questoes.
+
+- 5. dificuldades
+Armazena os níveis de dificuldade das questões, como "fácil", "médio", "difícil".
+Relações:
+Referenciada pela tabela questoes, que associa cada questão a um nível de dificuldade através de dificuldade_id.
+
+- 6. questoes
+Representa as questões de uma prova.
+Cada questão está associada a:
+Uma prova, através de prova_id.
+Um nível de dificuldade, através de dificuldade_id.
+As questões também têm relação de muitos-para-muitos com categorias, representada pela tabela associativa questoes_categorias.
+
+- 7. categorias
+Define as categorias das questões (por exemplo, "lógica", "estruturas de dados", etc.).
+Relações:
+Relaciona-se com questões através da tabela associativa questoes_categorias.
+
+- 8. questoes_categorias (Tabela Associativa)
+Representa a relação muitos-para-muitos entre questoes e categorias.
+Relações:
+Cada linha nesta tabela relaciona uma questão a uma categoria.
+
+- 9. solucoes
+Armazena as soluções das questões.
+Relações:
+Cada solução está associada a uma questão através de id_questao.
+
+- 10. subcategorias
+Define subcategorias que detalham as categorias principais.
+Relações:
+Cada subcategoria está associada a uma categoria através de categoria_id.
+
+- 11. topicos
+Define tópicos específicos dentro das subcategorias, permitindo uma especificação maior na categorização.
+Relações:
+Cada tópico está associado a uma subcategoria através de subcategoria_id.
 
 ### Script de criação do Banco de Dados PostGree SQL
 
 ```
+-- Tabela níveis
+CREATE TABLE niveis (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255)
+);
+
+-- Tabela modalidades
+CREATE TABLE modalidades (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255),
+    nivel_id INT,
+    FOREIGN KEY (nivel_id) REFERENCES niveis(id)
+);
+
+-- Tabela Arquivos
+CREATE TABLE arquivos (
+    id SERIAL PRIMARY KEY,
+    diretorio VARCHAR(510)
+);
+
+-- Tabela provas
 CREATE TABLE provas (
     id SERIAL PRIMARY KEY,
     ano DATE,
     modalidade_id INT,
     arquivo_id INT,
     fase VARCHAR(255),
-    turno VARCHAR(255)
+    turno VARCHAR(255),
+    FOREIGN KEY (modalidade_id) REFERENCES modalidades(id),
+    FOREIGN KEY (arquivo_id) REFERENCES arquivos(id)
 );
 
-CREATE TABLE modalidade (
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(255),
-    nivel_id INT
-);
-
-CREATE TABLE nivel (
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(255)
-);
-
-CREATE TABLE arquivo (
-    id SERIAL PRIMARY KEY,
-    diretorio VARCHAR(510)
-);
-
-CREATE TABLE dificuldade (
+-- Tabela dificuldades
+CREATE TABLE dificuldades (
     id SERIAL PRIMARY KEY,
     nivel VARCHAR(255)
 );
 
+-- Tabela questões
 CREATE TABLE questoes (
     id SERIAL PRIMARY KEY,
     prova_id INT,
     titulo VARCHAR(1000),
     enunciado TEXT,
     dificuldade_id INT,
+    arquivo_id INT,
     FOREIGN KEY (prova_id) REFERENCES provas(id),
-    FOREIGN KEY (dificuldade_id) REFERENCES dificuldade(id)
+    FOREIGN KEY (dificuldade_id) REFERENCES dificuldades(id),
+    FOREIGN KEY (arquivo_id) REFERENCES arquivos(id)
 );
 
+-- Tabela categorias
 CREATE TABLE categorias (
     id SERIAL PRIMARY KEY,
     nome VARCHAR(255)
 );
 
+-- Tabela subcategorias
+CREATE TABLE subcategorias (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255),
+    categoria_id INT,
+    FOREIGN KEY (categoria_id) REFERENCES categorias(id)
+);
+
+-- Tabela tópicos
+CREATE TABLE topicos (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255),
+    subcategoria_id INT,
+    FOREIGN KEY (subcategoria_id) REFERENCES subcategorias(id)
+);
+
+-- Tabela questões_categorias (N:N)
 CREATE TABLE questoes_categorias (
     questao_id INT,
     categoria_id INT,
@@ -127,24 +215,11 @@ CREATE TABLE questoes_categorias (
     FOREIGN KEY (categoria_id) REFERENCES categorias(id)
 );
 
+-- Tabela soluções
 CREATE TABLE solucoes (
     id SERIAL PRIMARY KEY,
     descricao VARCHAR(255),
     id_questao INT,
     FOREIGN KEY (id_questao) REFERENCES questoes(id)
-);
-
-CREATE TABLE subcategorias (
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(255),
-    categoria_id INT,
-    FOREIGN KEY (categoria_id) REFERENCES categorias(id)
-);
-
-CREATE TABLE topicos (
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(255),
-    subcategoria_id INT,
-    FOREIGN KEY (subcategoria_id) REFERENCES subcategorias(id)
 );
 ```
