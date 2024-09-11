@@ -42,8 +42,8 @@ para construir a interface de usuário.
 
 Certifique-se de ter o seguinte instalado em sua máquina:
 
-- [Node.js](https://nodejs.org/) (v12 ou superior)
-- [PostgreSQL](https://www.postgresql.org/) (v12 ou superior)
+- [Node.js](https://nodejs.org/)
+- [PostgreSQL](https://www.postgresql.org/)
 
 ### Requisitos funcionais e não funcionais do sistema
 ## Requisitos funcionais
@@ -69,66 +69,57 @@ RNF03 - Compatibilidade:
 - O sistema deve ser compatível com os principais navegadores (Chrome, Firefox, Edge, Safari) e funcionar corretamente em diferentes resoluções de tela.
 
 ### Modelo Físico do Banco de Dados
-![Lógico_5](https://github.com/user-attachments/assets/b6d1850e-ec40-46ee-80bc-f5793886f137)
+![Lógico_6](https://github.com/user-attachments/assets/1a224e8c-e49d-4310-822a-dff967c935cd)
 
 ### Relações do Banco de Dados
-- 1. provas
+# provas
 Representa as provas de cada edição da OBI.
-Relações:
-modalidade: Cada prova está associada a uma modalidade, como "iniciação" ou "programação", através de modalidade_id.
-arquivo: Relaciona-se com um arquivo específico, contendo o diretório físico, através de arquivo_id.
+- Relações:
+1. modalidade: Cada prova está associada a uma modalidade, como "iniciação" ou "programação", através de modalidade_id.
+2. arquivo: Relaciona-se com um arquivo específico, contendo o diretório físico, através de arquivo_id.
 
-- 2. modalidades
-Representa a modalidade de cada prova, como "iniciação" ou "programação".
-Relações:
-Cada modalidade está associada a um nível através de nivel_id.
+# modalidades
+- Relações:
+1. Cada modalidade está associada a um nível através de nivel_id.
 
-- 3. niveis
-Define os níveis de dificuldade ou participação, como "júnior", "sênior", etc.
+# niveis
 Relações:
-Referenciada pela tabela modalidade, indicando o nível de cada modalidade.
+1. Referenciada pela tabela modalidade, indicando o nível de cada modalidade.
 
-- 4. arquivos
-Armazena o diretório físico.
+# arquivos
 Relações:
-Referenciada pelas tabelas provas e questoes.
+1. Referenciada pelas tabelas provas e questoes.
 
-- 5. dificuldades
-Armazena os níveis de dificuldade das questões, como "fácil", "médio", "difícil".
+# dificuldades
 Relações:
-Referenciada pela tabela questoes, que associa cada questão a um nível de dificuldade através de dificuldade_id.
+1. Referenciada pela tabela questoes, que associa cada questão a um nível de dificuldade através de dificuldade_id.
 
-- 6. questoes
-Representa as questões de uma prova.
-Cada questão está associada a:
-Uma prova, através de prova_id.
-Um nível de dificuldade, através de dificuldade_id.
-As questões também têm relação de muitos-para-muitos com categorias, representada pela tabela associativa questoes_categorias.
+# questoes
+- Relações:
+1. Uma prova, através de prova_id.
+2. Um nível de dificuldade, através de dificuldade_id.
+3. As questões também têm relação de muitos-para-muitos com categorias, representada pela tabela associativa questoes_categorias.
 
-- 7. categorias
-Define as categorias das questões (por exemplo, "lógica", "estruturas de dados", etc.).
+# categorias
 Relações:
-Relaciona-se com questões através da tabela associativa questoes_categorias.
+1. Relaciona-se com questões através da tabela associativa questoes_categorias.
 
-- 8. questoes_categorias (Tabela Associativa)
-Representa a relação muitos-para-muitos entre questoes e categorias.
+# questoes_categorias
 Relações:
-Cada linha nesta tabela relaciona uma questão a uma categoria.
+1. Cada linha nesta tabela relaciona uma questão a uma categoria.
 
-- 9. solucoes
-Armazena as soluções das questões.
+# solucoes
 Relações:
-Cada solução está associada a uma questão através de id_questao.
+1. Cada solução está associada a uma questão através de id_questao.
 
-- 10. subcategorias
-Define subcategorias que detalham as categorias principais.
+# subcategorias
 Relações:
-Cada subcategoria está associada a uma categoria através de categoria_id.
+1. Cada subcategoria está associada a uma categoria através de categoria_id.
 
-- 11. topicos
-Define tópicos específicos dentro das subcategorias, permitindo uma especificação maior na categorização.
+# topicos
 Relações:
-Cada tópico está associado a uma subcategoria através de subcategoria_id.
+1. Cada tópico está associado a uma subcategoria através de subcategoria_id.
+#
 
 ### Script de criação do Banco de Dados PostGree SQL
 
