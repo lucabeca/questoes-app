@@ -1,7 +1,32 @@
-import React from 'react';
+import { useState } from 'react';
+import { Button } from 'reactstrap';
+import { get } from '../utils/methods';
 
 function HomePage() {
-  return <h1>Página Inicial</h1>;
+
+  const [questoes, setQuestoes] = useState([]);
+
+  const getQuestoes = () => {
+    get('/questoes').then((questao) => {
+      setQuestoes(questao);
+    }).catch((e) => {
+      console.error(e);
+    })
+  }
+
+  return (
+    <div>
+      <Button className="btn" color="primary" onClick={getQuestoes}>opa</Button>
+      {questoes.length > 0 ? (questoes.map(({ id, titulo, enunciado }) => {
+        return (
+          <div key={id}>
+            <h1> Título eh {titulo}, enunciado eh {enunciado} </h1>
+          </div>
+        );
+      })) : <div> Nenhum dado teste extraído </div>}
+    </div>
+  );
+
 }
 
 export default HomePage;
