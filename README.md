@@ -21,6 +21,8 @@ Este projeto é um sistema de consulta de questões das provas da OBI (Olimpiada
 ### Front-End
 - React
 - React Router DOM
+- Axios
+- React Strap
 
 ## Dependências
 
