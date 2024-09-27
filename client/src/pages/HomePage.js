@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { Button } from 'reactstrap';
 import { get } from '../utils/methods';
+import NavBar from '../components/NavBar';
+import { Outlet } from 'react-router-dom';
 
 function HomePage() {
 
   const [questoes, setQuestoes] = useState([]);
 
   const getQuestoes = () => {
-    get('/questoes').then((questao) => {
+    get('/questoes', { oi: [] }).then((questao) => {
       setQuestoes(questao);
     }).catch((e) => {
       console.error(e);
@@ -15,16 +17,18 @@ function HomePage() {
   }
 
   return (
-    <div>
-      <Button className="btn" color="primary" onClick={getQuestoes}>opa</Button>
-      {questoes.length > 0 ? (questoes.map(({ id, titulo, enunciado }) => {
-        return (
-          <div key={id}>
-            <h1> Título eh {titulo}, enunciado eh {enunciado} </h1>
-          </div>
-        );
-      })) : <div> Nenhum dado teste extraído </div>}
-    </div>
+    <>
+        <div>
+          <Button className="btn" color="primary" onClick={getQuestoes}>opa</Button>
+          {questoes.length > 0 ? (questoes.map(({ id, titulo, enunciado }) => {
+            return (
+              <div key={id}>
+                <h1> Título eh {titulo}, enunciado eh {enunciado} </h1>
+              </div>
+            );
+          })) : <div> Nenhum dado teste extraído </div>}
+        </div>
+    </>
   );
 
 }

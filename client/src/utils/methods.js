@@ -2,9 +2,11 @@ import axios from 'axios';
 
 const host = 'http://localhost:3001/api'
 
-async function get(url = '') {
+async function get(url = '', data={}) {
     try {
-        const response = await axios.get(`${host}${url}`);
+        const response = await axios.get(`${host}${url}`, {
+            params: data,
+        });
         return response.data;  // Retorna os dados da resposta
     } catch (error) {
         console.error('Erro ao realizar GET:', error);
@@ -34,9 +36,11 @@ async function put(url = '', data = {}) {
 }
 
 
-async function del(url = '') {
+async function del(url = '', data = {}) {
     try {
-        const response = await axios.delete(`${host}${url}`);
+        const response = await axios.delete(`${host}${url}`, {
+            data: data,
+        });
         return response.data;  // Retorna os dados da resposta
     } catch (error) {
         console.error('Erro ao realizar DELETE:', error);
