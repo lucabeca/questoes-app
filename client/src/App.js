@@ -9,9 +9,9 @@ import Footer from './components/Footer';
 
 const Layout = () => {
   return (
-    <div className="d-flex flex-column min-vh-100"> {/* Adicionando classes para altura total da tela */}
+    <div className="d-flex flex-column min-vh-100">
       <NavBar />
-      <main className="flex-grow-1"> {/* flex-grow-1 permite que o conteúdo principal ocupe o espaço disponível */}
+      <main className="flex-grow-1">
         <Outlet />
       </main>
       <Footer />

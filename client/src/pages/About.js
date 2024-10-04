@@ -120,7 +120,7 @@ function About() {
       <div className="row justify-content-center mt-5">
         <div className="col-md-8">
           <div className="card shadow-sm border-0">
-            <div className="card-body">
+            <div className="card-body"> 
               <h5 className="card-title text-center">Contato</h5>
               <form>
                 <div className="mb-3">
